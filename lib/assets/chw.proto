@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package chp.v1;
+
+option go_package = "chp/com/server/pb;pb";
+
+service CHPRecords {
+  rpc SyncRecords(SyncRecordsRequest) returns (SyncRecordsResponse);
+  rpc Health(HealthRequest) returns (HealthResponse);
+}
+
+message CHPRecord {
+  string local_id = 1;
+  string chw_id = 2;
+  string patient_name = 3;
+  string village_name = 4;
+  string visit_type = 5;
+  string vitals_bp = 6;
+  double vitals_temp = 7;
+  string urgency_level = 8;
+  string visit_notes = 9;
+  string created_at_local = 10;
+  string sync_status = 11;
+}
+
+message SyncRecordsRequest {
+  repeated CHPRecord records = 1;
+}
+
+message SyncRecordsResponse {
+  int32 received = 1;
+  int32 inserted = 2;
+  int32 duplicates = 3;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool healthy = 1;
+  string message = 2;
+}
